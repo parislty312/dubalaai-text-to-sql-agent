@@ -1,0 +1,19 @@
+[project]
+name = "dubalaai-text-to-sql-agent"
+version = "0.1.0"
+description = "DubalaAI personal Text-to-SQL agent"
+requires-python = ">=3.11"
+dependencies = [
+    "openai",
+    "ipython",
+    "pandas",
+    "pydantic",
+    "python-dotenv",
+    "sqlglot>=25.0",
+    "rich>=13.0",
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

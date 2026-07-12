@@ -1,0 +1,50 @@
+{
+  "model": "qwen3.6-plus",
+  "strategy": "single",
+  "n_queries": 30,
+  "p50_s": 1.183,
+  "p90_s": 1.706,
+  "p95_s": 1.855,
+  "max_s": 1.984,
+  "failures": 0,
+  "avg_tokens_in": 4710,
+  "avg_tokens_out": 102,
+  "cost_projection": [
+    {
+      "model": "qwen3.6-plus",
+      "per_query_usd": 0.002662,
+      "per_day_usd": 79.85,
+      "per_month_usd": 2395.49
+    },
+    {
+      "model": "gpt-oss-120b",
+      "per_query_usd": 0.000768,
+      "per_day_usd": 23.04,
+      "per_month_usd": 691.05
+    },
+    {
+      "model": "gpt-oss-20b",
+      "per_query_usd": 0.00036,
+      "per_day_usd": 10.81,
+      "per_month_usd": 324.33
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "per_query_usd": 0.000688,
+      "per_day_usd": 20.64,
+      "per_month_usd": 619.23
+    },
+    {
+      "model": "kimi-k2.5",
+      "per_query_usd": 0.003133,
+      "per_day_usd": 93.98,
+      "per_month_usd": 2819.39
+    },
+    {
+      "model": "gpt-5.4",
+      "per_query_usd": 0.013308,
+      "per_day_usd": 399.25,
+      "per_month_usd": 11977.42
+    }
+  ]
+}

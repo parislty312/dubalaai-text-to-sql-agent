@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q_001",
+    "question": "What are the top 5 best-selling genres by total sales?",
+    "tier": 1
+  },
+  {
+    "id": "q_002",
+    "question": "List all albums by the artist 'AC/DC'.",
+    "tier": 1
+  },
+  {
+    "id": "q_003",
+    "question": "What are the names and email addresses of customers from Brazil?",
+    "tier": 1
+  },
+  {
+    "id": "q_004",
+    "question": "What is the most popular media type based on number of tracks?",
+    "tier": 1
+  },
+  {
+    "id": "q_005",
+    "question": "Which employee has the most customers assigned to them?",
+    "tier": 2
+  },
+  {
+    "id": "q_006",
+    "question": "How many tracks are there in each playlist?",
+    "tier": 2
+  },
+  {
+    "id": "q_007",
+    "question": "What is the total revenue generated in the year 2021?",
+    "tier": 2
+  },
+  {
+    "id": "q_008",
+    "question": "What is the average invoice total for each billing country, ordered from highest to lowest?",
+    "tier": 2
+  },
+  {
+    "id": "q_009",
+    "question": "For each customer, what is their total spending and how does it rank compared to other customers? Show the top 5 customers by spending.",
+    "tier": 3
+  },
+  {
+    "id": "q_010",
+    "question": "Which artists have tracks in more than 3 different genres? List the artist name and the number of distinct genres.",
+    "tier": 3
+  }
+]

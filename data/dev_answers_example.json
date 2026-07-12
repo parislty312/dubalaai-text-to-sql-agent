@@ -1,0 +1,42 @@
+{
+  "q_001": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_002": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_003": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_004": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_005": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_006": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_007": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_008": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_009": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  },
+  "q_010": {
+    "sql": "<your generated SQL>",
+    "answer": "<human-readable result summary>"
+  }
+}

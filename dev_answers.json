@@ -1,0 +1,42 @@
+{
+  "q_001": {
+    "sql": "SELECT g.Name, SUM(il.UnitPrice * il.Quantity) AS TotalSales\nFROM Genre g\nJOIN Track t ON g.GenreId = t.GenreId\nJOIN InvoiceLine il ON t.TrackId = il.TrackId\nGROUP BY g.GenreId, g.Name\nORDER BY TotalSales DESC\nLIMIT 5",
+    "answer": "The top 5 best-selling genres by total sales are Rock (826.65), Latin (382.14), Metal (261.36), Alternative & Punk (241.56), and TV Shows (93.53)."
+  },
+  "q_002": {
+    "sql": "SELECT a.Title FROM Album a JOIN Artist ar ON a.ArtistId = ar.ArtistId WHERE ar.Name = 'AC/DC'",
+    "answer": "The albums by AC/DC are For Those About To Rock We Salute You and Let There Be Rock."
+  },
+  "q_003": {
+    "sql": "SELECT FirstName, LastName, Email FROM Customer WHERE Country = 'Brazil'",
+    "answer": "The customers from Brazil are Lu\u00eds Gon\u00e7alves (luisg@embraer.com.br), Eduardo Martins (eduardo@woodstock.com.br), Alexandre Rocha (alero@uol.com.br), Roberto Almeida (roberto.almeida@riotur.gov.br), and Fernanda Ramos (fernadaramos4@uol.com.br)."
+  },
+  "q_004": {
+    "sql": "SELECT mt.Name, COUNT(t.TrackId) AS TrackCount\nFROM MediaType mt\nLEFT JOIN Track t ON mt.MediaTypeId = t.MediaTypeId\nGROUP BY mt.MediaTypeId, mt.Name\nORDER BY TrackCount DESC\nLIMIT 1",
+    "answer": "The most popular media type is MPEG audio file with 3034 tracks."
+  },
+  "q_005": {
+    "sql": "SELECT e.FirstName || ' ' || e.LastName AS EmployeeName, COUNT(c.CustomerId) AS CustomerCount\nFROM Employee e\nLEFT JOIN Customer c ON e.EmployeeId = c.SupportRepId\nGROUP BY e.EmployeeId\nORDER BY CustomerCount DESC\nLIMIT 1",
+    "answer": "Jane Peacock has the most customers assigned to them, with a total of 21."
+  },
+  "q_006": {
+    "sql": "SELECT p.Name, COUNT(pt.TrackId) AS TrackCount FROM Playlist p LEFT JOIN PlaylistTrack pt ON p.PlaylistId = pt.PlaylistId GROUP BY p.PlaylistId, p.Name",
+    "answer": "The playlists contain the following number of tracks: Music (3290), 90\u2019s Music (1477), TV Shows (213), Classical (75), Classical 101 - Deep Cuts (25), Classical 101 - Next Steps (25), Classical 101 - The Basics (25), Heavy Metal Classic (26), Brazilian Music (39), Grunge (15), Music Videos (1), On-The-Go 1 (1), while Movies and Audiobooks have 0 tracks."
+  },
+  "q_007": {
+    "sql": "SELECT SUM(Total) AS total_revenue FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2021'",
+    "answer": "The total revenue generated in the year 2021 was 449.46."
+  },
+  "q_008": {
+    "sql": "SELECT BillingCountry, AVG(Total) AS AverageInvoiceTotal FROM Invoice GROUP BY BillingCountry ORDER BY AverageInvoiceTotal DESC",
+    "answer": "Chile has the highest average invoice total at 6.66, followed by Ireland and Hungary at 6.52, with the values decreasing down to the lowest recorded averages among the 24 countries."
+  },
+  "q_009": {
+    "sql": "SELECT \n    c.FirstName || ' ' || c.LastName AS CustomerName,\n    SUM(i.Total) AS TotalSpending,\n    RANK() OVER (ORDER BY SUM(i.Total) DESC) AS SpendingRank\nFROM Customer c\nJOIN Invoice i ON c.CustomerId = i.CustomerId\nGROUP BY c.CustomerId, c.FirstName, c.LastName\nORDER BY TotalSpending DESC\nLIMIT 5",
+    "answer": "The top 5 customers by spending are Helena Hol\u00fd ($49.62, Rank 1), Richard Cunningham ($47.62, Rank 2), Luis Rojas ($46.62, Rank 3), and Ladislav Kov\u00e1cs and Hugh O'Reilly (both $45.62, tied at Rank 4)."
+  },
+  "q_010": {
+    "sql": "SELECT \n    a.Name AS ArtistName,\n    COUNT(DISTINCT t.GenreId) AS DistinctGenreCount\nFROM \n    Artist a\nJOIN \n    Album al ON a.ArtistId = al.ArtistId\nJOIN \n    Track t ON al.AlbumId = t.AlbumId\nGROUP BY \n    a.ArtistId, a.Name\nHAVING \n    COUNT(DISTINCT t.GenreId) > 3\nORDER BY \n    DistinctGenreCount DESC",
+    "answer": "Iron Maiden is the only artist with tracks in more than 3 different genres, having 4 distinct genres."
+  }
+}

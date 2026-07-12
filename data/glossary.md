@@ -1,0 +1,3 @@
+- best-selling / top-selling: rank by total revenue (SUM of UnitPrice * Quantity), not unit count, unless the question says otherwise.
+- revenue / sales: invoice money amounts; track-level revenue comes from InvoiceLine, invoice-level from Invoice.Total.
+- customer name: FirstName + ' ' + LastName.

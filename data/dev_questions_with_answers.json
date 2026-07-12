@@ -1,0 +1,165 @@
+[
+  {
+    "id": "q_001",
+    "question": "What are the top 5 best-selling genres by total sales?",
+    "tier": 1,
+    "gold_sql": "SELECT g.Name, SUM(il.UnitPrice * il.Quantity) as TotalSales FROM Genre g JOIN Track t ON g.GenreId = t.GenreId JOIN InvoiceLine il ON t.TrackId = il.TrackId GROUP BY g.Name ORDER BY TotalSales DESC LIMIT 5",
+    "gold_answer": "Rock ($826.65), Latin ($382.14), Metal ($261.36), Alternative & Punk ($241.56), TV Shows ($93.53)",
+    "expected_result": [
+      {"Name": "Rock", "TotalSales": 826.65},
+      {"Name": "Latin", "TotalSales": 382.14},
+      {"Name": "Metal", "TotalSales": 261.36},
+      {"Name": "Alternative & Punk", "TotalSales": 241.56},
+      {"Name": "TV Shows", "TotalSales": 93.53}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_002",
+    "question": "List all albums by the artist 'AC/DC'.",
+    "tier": 1,
+    "gold_sql": "SELECT al.Title FROM Album al JOIN Artist ar ON al.ArtistId = ar.ArtistId WHERE ar.Name = 'AC/DC'",
+    "gold_answer": "For Those About To Rock We Salute You, Let There Be Rock",
+    "expected_result": [
+      {"Title": "For Those About To Rock We Salute You"},
+      {"Title": "Let There Be Rock"}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_003",
+    "question": "What are the names and email addresses of customers from Brazil?",
+    "tier": 1,
+    "gold_sql": "SELECT FirstName, LastName, Email FROM Customer WHERE Country = 'Brazil'",
+    "gold_answer": "Lu\u00eds Gon\u00e7alves (luisg@embraer.com.br), Eduardo Martins (eduardo@woodstock.com.br), Alexandre Rocha (alero@uol.com.br), Roberto Almeida (roberto.almeida@riotur.gov.br), Fernanda Ramos (fernadaramos4@uol.com.br)",
+    "expected_result": [
+      {"FirstName": "Lu\u00eds", "LastName": "Gon\u00e7alves", "Email": "luisg@embraer.com.br"},
+      {"FirstName": "Eduardo", "LastName": "Martins", "Email": "eduardo@woodstock.com.br"},
+      {"FirstName": "Alexandre", "LastName": "Rocha", "Email": "alero@uol.com.br"},
+      {"FirstName": "Roberto", "LastName": "Almeida", "Email": "roberto.almeida@riotur.gov.br"},
+      {"FirstName": "Fernanda", "LastName": "Ramos", "Email": "fernadaramos4@uol.com.br"}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_004",
+    "question": "What is the most popular media type based on number of tracks?",
+    "tier": 1,
+    "gold_sql": "SELECT mt.Name, COUNT(t.TrackId) as TrackCount FROM MediaType mt JOIN Track t ON mt.MediaTypeId = t.MediaTypeId GROUP BY mt.MediaTypeId, mt.Name ORDER BY TrackCount DESC LIMIT 1",
+    "gold_answer": "MPEG audio file (3,034 tracks)",
+    "expected_result": [
+      {"Name": "MPEG audio file", "TrackCount": 3034}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_005",
+    "question": "Which employee has the most customers assigned to them?",
+    "tier": 2,
+    "gold_sql": "SELECT e.FirstName || ' ' || e.LastName as EmployeeName, COUNT(c.CustomerId) as CustomerCount FROM Employee e JOIN Customer c ON e.EmployeeId = c.SupportRepId GROUP BY e.EmployeeId, e.FirstName, e.LastName ORDER BY CustomerCount DESC LIMIT 1",
+    "gold_answer": "Jane Peacock (21 customers)",
+    "expected_result": [
+      {"EmployeeName": "Jane Peacock", "CustomerCount": 21}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_006",
+    "question": "How many tracks are there in each playlist?",
+    "tier": 2,
+    "gold_sql": "SELECT p.Name, COUNT(pt.TrackId) as TrackCount FROM Playlist p LEFT JOIN PlaylistTrack pt ON p.PlaylistId = pt.PlaylistId GROUP BY p.PlaylistId, p.Name ORDER BY TrackCount DESC",
+    "gold_answer": "Music (3,290), Music (3,290), 90\u2019s Music (1,477), TV Shows (213), TV Shows (213), Classical (75), Brazilian Music (39), Heavy Metal Classic (26), Classical 101 - Deep Cuts (25), Classical 101 - Next Steps (25), Classical 101 - The Basics (25), Grunge (15), Music Videos (1), On-The-Go 1 (1), Movies (0), Audiobooks (0), Audiobooks (0), Movies (0)",
+    "expected_result": [
+      {"Name": "Music", "TrackCount": 3290},
+      {"Name": "Music", "TrackCount": 3290},
+      {"Name": "90\u2019s Music", "TrackCount": 1477},
+      {"Name": "TV Shows", "TrackCount": 213},
+      {"Name": "TV Shows", "TrackCount": 213},
+      {"Name": "Classical", "TrackCount": 75},
+      {"Name": "Brazilian Music", "TrackCount": 39},
+      {"Name": "Heavy Metal Classic", "TrackCount": 26},
+      {"Name": "Classical 101 - Deep Cuts", "TrackCount": 25},
+      {"Name": "Classical 101 - Next Steps", "TrackCount": 25},
+      {"Name": "Classical 101 - The Basics", "TrackCount": 25},
+      {"Name": "Grunge", "TrackCount": 15},
+      {"Name": "Music Videos", "TrackCount": 1},
+      {"Name": "On-The-Go 1", "TrackCount": 1},
+      {"Name": "Movies", "TrackCount": 0},
+      {"Name": "Audiobooks", "TrackCount": 0},
+      {"Name": "Audiobooks", "TrackCount": 0},
+      {"Name": "Movies", "TrackCount": 0}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_007",
+    "question": "What is the total revenue generated in the year 2021?",
+    "tier": 2,
+    "gold_sql": "SELECT SUM(Total) as TotalRevenue FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2021'",
+    "gold_answer": "$449.46",
+    "expected_result": [
+      {"TotalRevenue": 449.46}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_008",
+    "question": "What is the average invoice total for each billing country, ordered from highest to lowest?",
+    "tier": 2,
+    "gold_sql": "SELECT BillingCountry, AVG(Total) as AverageInvoiceTotal FROM Invoice GROUP BY BillingCountry ORDER BY AverageInvoiceTotal DESC",
+    "gold_answer": "Chile ($6.66), Ireland ($6.52), Hungary ($6.52), Czech Republic ($6.45), Austria ($6.09), ...",
+    "expected_result": [
+      {"BillingCountry": "Chile", "AverageInvoiceTotal": 6.66},
+      {"BillingCountry": "Ireland", "AverageInvoiceTotal": 6.52},
+      {"BillingCountry": "Hungary", "AverageInvoiceTotal": 6.52},
+      {"BillingCountry": "Czech Republic", "AverageInvoiceTotal": 6.45},
+      {"BillingCountry": "Austria", "AverageInvoiceTotal": 6.09},
+      {"BillingCountry": "Finland", "AverageInvoiceTotal": 5.95},
+      {"BillingCountry": "Netherlands", "AverageInvoiceTotal": 5.80},
+      {"BillingCountry": "India", "AverageInvoiceTotal": 5.79},
+      {"BillingCountry": "USA", "AverageInvoiceTotal": 5.75},
+      {"BillingCountry": "Norway", "AverageInvoiceTotal": 5.66},
+      {"BillingCountry": "Germany", "AverageInvoiceTotal": 5.59},
+      {"BillingCountry": "France", "AverageInvoiceTotal": 5.57},
+      {"BillingCountry": "Sweden", "AverageInvoiceTotal": 5.52},
+      {"BillingCountry": "Portugal", "AverageInvoiceTotal": 5.52},
+      {"BillingCountry": "Brazil", "AverageInvoiceTotal": 5.43},
+      {"BillingCountry": "Canada", "AverageInvoiceTotal": 5.43},
+      {"BillingCountry": "United Kingdom", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Spain", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Poland", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Italy", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Denmark", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Belgium", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Australia", "AverageInvoiceTotal": 5.37},
+      {"BillingCountry": "Argentina", "AverageInvoiceTotal": 5.37}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_009",
+    "question": "For each customer, what is their total spending and how does it rank compared to other customers? Show the top 5 customers by spending.",
+    "tier": 3,
+    "gold_sql": "SELECT c.FirstName || ' ' || c.LastName as CustomerName, SUM(i.Total) as TotalSpent, RANK() OVER (ORDER BY SUM(i.Total) DESC) as Rank FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId ORDER BY TotalSpent DESC LIMIT 5",
+    "gold_answer": "Helena Hol\u00fd ($49.62, rank 1), Richard Cunningham ($47.62, rank 2), Luis Rojas ($46.62, rank 3), Ladislav Kov\u00e1cs ($45.62, rank 4), Hugh O'Reilly ($45.62, rank 4)",
+    "expected_result": [
+      {"CustomerName": "Helena Hol\u00fd", "TotalSpent": 49.62, "Rank": 1},
+      {"CustomerName": "Richard Cunningham", "TotalSpent": 47.62, "Rank": 2},
+      {"CustomerName": "Luis Rojas", "TotalSpent": 46.62, "Rank": 3},
+      {"CustomerName": "Ladislav Kov\u00e1cs", "TotalSpent": 45.62, "Rank": 4},
+      {"CustomerName": "Hugh O'Reilly", "TotalSpent": 45.62, "Rank": 4}
+    ],
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_010",
+    "question": "Which artists have tracks in more than 3 different genres? List the artist name and the number of distinct genres.",
+    "tier": 3,
+    "gold_sql": "SELECT ar.Name as ArtistName, COUNT(DISTINCT g.GenreId) as GenreCount FROM Artist ar JOIN Album al ON ar.ArtistId = al.ArtistId JOIN Track t ON al.AlbumId = t.AlbumId JOIN Genre g ON t.GenreId = g.GenreId GROUP BY ar.ArtistId HAVING GenreCount > 3 ORDER BY GenreCount DESC",
+    "gold_answer": "Iron Maiden (4 genres)",
+    "expected_result": [
+      {"ArtistName": "Iron Maiden", "GenreCount": 4}
+    ],
+    "evaluation": "sql_result_match"
+  }
+]

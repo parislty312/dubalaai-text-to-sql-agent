@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "model": "gpt-oss-120b",
+    "strategy": "single",
+    "questions": [
+      "data/dev_questions_with_answers.json"
+    ],
+    "timestamp": "2026-06-12T15:32:20"
+  },
+  "summary": {
+    "n": 2,
+    "execution_accuracy": 1.0,
+    "overall_accuracy": 1.0,
+    "valid_sql_rate": 1.0,
+    "repair_rate": 0.0,
+    "miscalibrated_clarify_rate": 0.0,
+    "p50_latency_s": 1.8785805829975288,
+    "p95_latency_s": 1.4143616249930346,
+    "avg_cost_usd": 0.000775125,
+    "total_cost_usd": 0.00155025,
+    "avg_llm_calls": 1.0,
+    "avg_input_tokens": 4251.5,
+    "avg_output_tokens": 229.0
+  },
+  "records": [
+    {
+      "id": "q_001",
+      "tier": 1,
+      "mode": "sql_result_match",
+      "question": "What are the top 5 best-selling genres by total sales?",
+      "action": "sql",
+      "sql": "SELECT g.Name AS Genre, SUM(il.UnitPrice * il.Quantity) AS TotalSales\nFROM InvoiceLine il\nJOIN Track t ON il.TrackId = t.TrackId\nJOIN Genre g ON t.GenreId = g.GenreId\nGROUP BY g.Name\nORDER BY TotalSales DESC\nLIMIT 5",
+      "correct": true,
+      "miscalibrated_clarify": false,
+      "attempts": 1,
+      "confidence": "high",
+      "tables": [
+        "Genre",
+        "InvoiceLine",
+        "Track"
+      ],
+      "llm_calls": 1,
+      "input_tokens": 4253,
+      "output_tokens": 281,
+      "cost_usd": 0.00080655,
+      "llm_latency_s": 2.331956458001514,
+      "wall_s": 2.342799541002023,
+      "error": null,
+      "result_digest": "[[[\"str\", \"Alternative & Punk\"], [\"float\", \"241.56\"]], [[\"str\", \"Latin\"], [\"float\", \"382.14\"]], [[\"str\", \"Metal\"], [\"float\", \"261.36\"]], [[\"str\", \"Rock\"], [\"float\", \"826.65\"]], [[\"str\", \"TV Shows\"], [\"float\", \"93.53\"]]]"
+    },
+    {
+      "id": "q_002",
+      "tier": 1,
+      "mode": "sql_result_match",
+      "question": "List all albums by the artist 'AC/DC'.",
+      "action": "sql",
+      "sql": "SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'AC/DC'",
+      "correct": true,
+      "miscalibrated_clarify": false,
+      "attempts": 1,
+      "confidence": "high",
+      "tables": [
+        "Album",
+        "Artist"
+      ],
+      "llm_calls": 1,
+      "input_tokens": 4250,
+      "output_tokens": 177,
+      "cost_usd": 0.0007437,
+      "llm_latency_s": 1.4132822920073522,
+      "wall_s": 1.4143616249930346,
+      "error": null,
+      "result_digest": "[[[\"str\", \"For Those About To Rock We Salute You\"]], [[\"str\", \"Let There Be Rock\"]]]"
+    }
+  ]
+}
