@@ -2,14 +2,14 @@ from src.guardrails import validate_sql
 
 
 def test_plain_select_passes():
-    v = validate_sql("SELECT Name FROM Artist", row_cap=None)
+    v = validate_sql("SELECT name FROM categories", row_cap=None)
     assert v.ok
-    assert v.tables == ["Artist"]
+    assert v.tables == ["categories"]
 
 
 def test_cte_select_passes():
     v = validate_sql(
-        "WITH t AS (SELECT ArtistId FROM Album) SELECT COUNT(*) FROM t",
+        "WITH t AS (SELECT category_id FROM transactions) SELECT COUNT(*) FROM t",
         row_cap=None,
     )
     assert v.ok
@@ -17,7 +17,7 @@ def test_cte_select_passes():
 
 def test_union_passes():
     v = validate_sql(
-        "SELECT Name FROM Artist UNION SELECT Name FROM Genre",
+        "SELECT name FROM categories UNION SELECT name FROM merchants",
         row_cap=None,
     )
     assert v.ok
@@ -25,10 +25,10 @@ def test_union_passes():
 
 def test_writes_rejected():
     for sql in [
-        "INSERT INTO Artist (Name) VALUES ('x')",
-        "UPDATE Artist SET Name='x'",
-        "DELETE FROM Artist",
-        "DROP TABLE Artist",
+        "INSERT INTO categories (name) VALUES ('x')",
+        "UPDATE categories SET name='x'",
+        "DELETE FROM categories",
+        "DROP TABLE categories",
         "CREATE TABLE t (a int)",
     ]:
         v = validate_sql(sql, row_cap=None)
@@ -36,7 +36,7 @@ def test_writes_rejected():
 
 
 def test_pragma_rejected():
-    assert not validate_sql("PRAGMA table_info(Artist)", row_cap=None).ok
+    assert not validate_sql("PRAGMA table_info(categories)", row_cap=None).ok
 
 
 def test_multi_statement_rejected():
@@ -50,13 +50,13 @@ def test_garbage_rejected():
 
 
 def test_limit_appended():
-    v = validate_sql("SELECT Name FROM Artist", row_cap=200)
+    v = validate_sql("SELECT name FROM categories", row_cap=200)
     assert v.ok
     assert "LIMIT 200" in v.sql
 
 
 def test_existing_limit_preserved():
-    v = validate_sql("SELECT Name FROM Artist LIMIT 5", row_cap=200)
+    v = validate_sql("SELECT name FROM categories LIMIT 5", row_cap=200)
     assert v.ok
     assert "LIMIT 5" in v.sql
     assert "200" not in v.sql
@@ -64,7 +64,7 @@ def test_existing_limit_preserved():
 
 def test_tables_extracted_across_joins():
     v = validate_sql(
-        "SELECT al.Title FROM Album al JOIN Artist ar ON al.ArtistId = ar.ArtistId",
+        "SELECT t.amount FROM transactions t JOIN categories c ON t.category_id = c.category_id",
         row_cap=None,
     )
-    assert v.tables == ["Album", "Artist"]
+    assert v.tables == ["categories", "transactions"]

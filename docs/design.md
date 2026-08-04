@@ -1,9 +1,10 @@
 # Design
 
 DubalaAI Text-to-SQL Agent is a terminal-first agent for querying SQLite
-databases with natural language. The default database is Chinook, but the
-implementation keeps the database adapter, schema context, model client, and
-agent strategies separate so the project can evolve beyond the demo dataset.
+databases with natural language. The default database is a mock personal finance
+tracker, but the implementation keeps the database adapter, schema context,
+model client, and agent strategies separate so the project can evolve beyond
+the demo dataset.
 
 ## Architecture
 

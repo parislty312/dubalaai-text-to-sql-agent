@@ -4,8 +4,9 @@ An interactive personal text-to-SQL agent that turns natural-language questions
 into safe SQLite queries, executes them, and shows both the SQL and result table
 in the terminal.
 
-The project uses the Chinook sample database by default, but the agent is built
-around a reusable SQLite adapter, schema-context builder, SQL guardrails,
+The project uses a mock personal finance database by default, covering accounts,
+transactions, budgets, merchants, subscriptions, and savings goals. The agent is
+built around a reusable SQLite adapter, schema-context builder, SQL guardrails,
 multiple prompting strategies, and an evaluation harness.
 
 ## Highlights
@@ -24,9 +25,9 @@ multiple prompting strategies, and an evaluation harness.
 ```text
 .
 ├── data/
-│   ├── Chinook.db
-│   ├── dev_questions.json
-│   └── dev_questions_with_answers.json
+│   ├── personal_finance.db
+│   ├── finance_questions.json
+│   └── finance_questions_with_answers.json
 ├── docs/
 │   ├── case_study.md
 │   └── design.md
@@ -68,8 +69,9 @@ uv run python -m src.cli --model qwen3p7-plus --strategy single --no-summary
 Try:
 
 ```text
-ask> What are the top 5 best-selling genres by total sales?
-ask> Which customers spent the most money?
+ask> Which subscriptions renew in the next 30 days?
+ask> How much did I spend in July 2026 by category?
+ask> Which July 2026 categories were over budget?
 ask> /schema
 ask> /strategy react
 ask> exit
@@ -89,10 +91,10 @@ Run the text-to-SQL eval set:
 uv run python -m src.evals \
   --model qwen3p7-plus \
   --strategy single \
-  --questions data/dev_questions_with_answers.json \
+  --questions data/finance_questions_with_answers.json \
   --out results/eval_qwen3p7-plus_single.json \
   --markdown results/eval_qwen3p7-plus_single.md \
-  --write-answers dev_answers.json
+  --write-answers finance_answers.json
 ```
 
 Benchmark latency and cost:

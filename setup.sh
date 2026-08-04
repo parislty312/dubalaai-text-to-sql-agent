@@ -19,20 +19,15 @@ uv venv
 source .venv/bin/activate
 uv pip install -e .
 
-# Download the Chinook database
+# Build the sample personal finance database
 echo ""
-echo "Downloading Chinook database..."
+echo "Creating personal finance database..."
 mkdir -p data
 
-if [ -f "data/Chinook.db" ]; then
-    echo "Removing existing data/Chinook.db..."
-    rm data/Chinook.db
-fi
+python scripts/create_personal_finance_db.py
 
-curl -s https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql | sqlite3 data/Chinook.db
-
-if [ -f "data/Chinook.db" ]; then
-    echo "Successfully created data/Chinook.db"
+if [ -f "data/personal_finance.db" ]; then
+    echo "Successfully created data/personal_finance.db"
 else
     echo "Error: Failed to create database"
     exit 1

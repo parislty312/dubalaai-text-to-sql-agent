@@ -206,7 +206,7 @@ def result_answer_text(turn) -> str:
     return "; ".join(preview) + suffix
 
 
-def write_dev_answers(report: dict, path: str, client=None) -> None:
+def write_answers(report: dict, path: str, client=None) -> None:
     answers = {}
     for record in report["records"]:
         if not record["id"].startswith("q_"):
@@ -234,9 +234,9 @@ def main() -> None:
     parser.add_argument(
         "--questions",
         nargs="+",
-        default=["data/dev_questions_with_answers.json"],
+        default=["data/finance_questions_with_answers.json"],
     )
-    parser.add_argument("--db", default="data/Chinook.db")
+    parser.add_argument("--db", default="data/personal_finance.db")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument(
         "--sleep",
@@ -250,7 +250,7 @@ def main() -> None:
     parser.add_argument(
         "--llm-answer-summary",
         action="store_true",
-        help="use an extra LLM call per answer when writing dev_answers.json",
+        help="use an extra LLM call per answer when writing the answers JSON",
     )
     args = parser.parse_args()
 
@@ -284,7 +284,7 @@ def main() -> None:
         write_markdown_report(serializable_report(report), args.markdown, meta=meta)
     if args.write_answers:
         answer_client = client if args.llm_answer_summary else None
-        write_dev_answers(report, args.write_answers, client=answer_client)
+        write_answers(report, args.write_answers, client=answer_client)
 
     print(f"\n== {args.model} / {args.strategy} ==")
     for key, value in report["summary"].items():

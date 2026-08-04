@@ -16,9 +16,9 @@ def test_percentile_nearest_rank():
 
 Q_MATCH = {
     "id": "t1",
-    "question": "How many artists are there?",
+    "question": "How many transactions are there?",
     "tier": 1,
-    "gold_sql": "SELECT COUNT(*) FROM Artist",
+    "gold_sql": "SELECT COUNT(*) FROM transactions",
     "evaluation": "sql_result_match",
 }
 Q_DECLINE = {
@@ -39,14 +39,14 @@ def _strategy(adapter, responses):
 
 
 def test_correct_answer_scores(adapter):
-    strategy = _strategy(adapter, [_sql("SELECT COUNT(ArtistId) FROM Artist")])
+    strategy = _strategy(adapter, [_sql("SELECT COUNT(transaction_id) FROM transactions")])
     record = evaluate_question(Q_MATCH, strategy, adapter)
     assert record["correct"] is True
     assert record["action"] == "sql"
 
 
 def test_wrong_answer_fails(adapter):
-    strategy = _strategy(adapter, [_sql("SELECT COUNT(*) FROM Album")])
+    strategy = _strategy(adapter, [_sql("SELECT COUNT(*) FROM accounts")])
     record = evaluate_question(Q_MATCH, strategy, adapter)
     assert record["correct"] is False
 
@@ -80,7 +80,7 @@ def test_run_eval_summary(adapter, tmp_path):
     qfile.write_text(json.dumps([Q_MATCH, Q_DECLINE]))
     strategy = _strategy(
         adapter,
-        [_sql("SELECT COUNT(*) FROM Artist"), json.dumps({"action": "decline", "confidence": "high"})],
+        [_sql("SELECT COUNT(*) FROM transactions"), json.dumps({"action": "decline", "confidence": "high"})],
     )
     report = run_eval(strategy, adapter, [str(qfile)])
     assert report["summary"]["n"] == 2

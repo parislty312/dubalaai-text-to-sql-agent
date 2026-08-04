@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q_001",
+    "question": "How much did I spend in July 2026 by category?",
+    "tier": 1
+  },
+  {
+    "id": "q_002",
+    "question": "Which subscriptions renew in the next 30 days after August 3, 2026?",
+    "tier": 1
+  },
+  {
+    "id": "q_003",
+    "question": "What is my total monthly cost for active subscriptions?",
+    "tier": 1
+  },
+  {
+    "id": "q_004",
+    "question": "Which July 2026 categories were over budget?",
+    "tier": 2
+  },
+  {
+    "id": "q_005",
+    "question": "Who were my top merchants by spending in July 2026?",
+    "tier": 1
+  },
+  {
+    "id": "q_006",
+    "question": "Compare my July 2026 spending to June 2026 by parent category.",
+    "tier": 2
+  },
+  {
+    "id": "q_007",
+    "question": "What percent of my July 2026 expense spending was essential?",
+    "tier": 2
+  },
+  {
+    "id": "q_008",
+    "question": "How much did I transfer to savings in July 2026?",
+    "tier": 1
+  },
+  {
+    "id": "q_009",
+    "question": "Which savings goals still need more than $2,000?",
+    "tier": 1
+  },
+  {
+    "id": "q_010",
+    "question": "What is my net cash flow for July 2026, excluding transfers?",
+    "tier": 1
+  }
+]

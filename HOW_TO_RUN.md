@@ -20,7 +20,7 @@ FIREWORKS_API_KEY=...
 FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1
 ```
 
-If `data/Chinook.db` is missing, run:
+If `data/personal_finance.db` is missing, run:
 
 ```bash
 ./setup.sh
@@ -55,7 +55,8 @@ python -m src.cli --model qwen3p7-plus --strategy single --no-summary
 Then ask a question:
 
 ```text
-ask> What are the top 5 best-selling genres by total sales?
+ask> Which subscriptions renew in the next 30 days after August 3, 2026?
+ask> How much did I spend in July 2026 by category?
 ```
 
 Useful CLI commands:
@@ -79,7 +80,7 @@ Run only two questions first:
 uv run python -m src.evals \
   --model qwen3p7-plus \
   --strategy single \
-  --questions data/dev_questions_with_answers.json \
+  --questions data/finance_questions_with_answers.json \
   --limit 2 \
   --out results/eval_smoke.json \
   --markdown results/eval_smoke.md
@@ -97,13 +98,13 @@ cat results/eval_smoke.md
 uv run python -m src.evals \
   --model qwen3p7-plus \
   --strategy single \
-  --questions data/dev_questions_with_answers.json \
+  --questions data/finance_questions_with_answers.json \
   --out results/eval_qwen3p7-plus_single.json \
   --markdown results/eval_qwen3p7-plus_single.md \
-  --write-answers dev_answers.json
+  --write-answers finance_answers.json
 ```
 
-If you want the `dev_answers.json` answer text to be LLM-written instead of a
+If you want the `finance_answers.json` answer text to be LLM-written instead of a
 deterministic row preview, add:
 
 ```bash
@@ -119,7 +120,7 @@ for model in qwen3p7-plus qwen3.7-plus deepseek-v4-flash; do
     uv run python -m src.evals \
       --model "$model" \
       --strategy "$strategy" \
-      --questions data/dev_questions_with_answers.json \
+      --questions data/finance_questions_with_answers.json \
       --out "results/eval_${model}_${strategy}.json" \
       --markdown "results/eval_${model}_${strategy}.md"
   done

@@ -8,9 +8,10 @@ follow-up questions.
 
 ## Dataset
 
-The default dataset is Chinook, a compact SQLite database that models a digital
-music store. It includes artists, albums, tracks, genres, customers, employees,
-invoices, invoice lines, playlists, and playlist-track relationships.
+The default dataset is a mock personal finance tracker. It includes accounts,
+categories, merchants, transactions, budgets, subscriptions, and savings goals.
+The data is synthetic, so it is safe to publish while still supporting realistic
+questions about spending, budgets, subscriptions, and savings progress.
 
 ## Approach
 

@@ -17,19 +17,19 @@ def _tool_resp(sql):
 def test_react_explores_then_answers(adapter):
     client = FakeLLMClient(
         [
-            _tool_resp("SELECT Name FROM Artist LIMIT 3"),
+            _tool_resp("SELECT name FROM categories LIMIT 3"),
             json.dumps(
                 {
                     "action": "sql",
-                    "sql": "SELECT COUNT(*) FROM Artist",
+                    "sql": "SELECT COUNT(*) FROM transactions",
                     "confidence": "high",
                 }
             ),
         ]
     )
-    turn = ReActStrategy(client, adapter, "CARD").run("how many artists?", [])
+    turn = ReActStrategy(client, adapter, "CARD").run("how many transactions?", [])
     assert turn.action == "sql"
-    assert turn.result.rows[0][0] == 275
+    assert turn.result.rows[0][0] == 40
     assert turn.stats.llm_calls == 2
     roles = [message["role"] for message in client.calls[1]["messages"]]
     assert "tool" in roles
@@ -38,11 +38,11 @@ def test_react_explores_then_answers(adapter):
 def test_react_tool_error_is_fed_back(adapter):
     client = FakeLLMClient(
         [
-            _tool_resp("SELECT Nme FROM Artist"),
+            _tool_resp("SELECT nme FROM categories"),
             json.dumps(
                 {
                     "action": "sql",
-                    "sql": "SELECT Name FROM Artist LIMIT 1",
+                    "sql": "SELECT name FROM categories LIMIT 1",
                     "confidence": "medium",
                 }
             ),

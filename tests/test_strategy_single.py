@@ -17,25 +17,25 @@ def make(adapter, responses):
 def test_happy_path_one_call(adapter):
     client, strategy = make(
         adapter,
-        [_resp(action="sql", sql="SELECT Name FROM Artist LIMIT 2", confidence="high")],
+        [_resp(action="sql", sql="SELECT name FROM categories LIMIT 2", confidence="high")],
     )
-    turn = strategy.run("list two artists", [])
+    turn = strategy.run("list two categories", [])
     assert turn.action == "sql"
     assert turn.result.row_count == 2
     assert turn.attempts == 1
     assert turn.stats.llm_calls == 1
-    assert turn.tables == ["Artist"]
+    assert turn.tables == ["categories"]
 
 
 def test_repair_after_exec_error(adapter):
     client, strategy = make(
         adapter,
         [
-            _resp(action="sql", sql="SELECT Nme FROM Artist", confidence="high"),
-            _resp(action="sql", sql="SELECT Name FROM Artist LIMIT 1", confidence="high"),
+            _resp(action="sql", sql="SELECT nme FROM categories", confidence="high"),
+            _resp(action="sql", sql="SELECT name FROM categories LIMIT 1", confidence="high"),
         ],
     )
-    turn = strategy.run("artist names", [])
+    turn = strategy.run("category names", [])
     assert turn.action == "sql"
     assert turn.attempts == 2
     repair_message = client.calls[1]["messages"][-1]["content"]
@@ -46,8 +46,8 @@ def test_guardrail_rejection_triggers_repair(adapter):
     _client, strategy = make(
         adapter,
         [
-            _resp(action="sql", sql="DROP TABLE Artist", confidence="high"),
-            _resp(action="sql", sql="SELECT Name FROM Artist LIMIT 1", confidence="high"),
+            _resp(action="sql", sql="DROP TABLE categories", confidence="high"),
+            _resp(action="sql", sql="SELECT name FROM categories LIMIT 1", confidence="high"),
         ],
     )
     turn = strategy.run("q", [])
@@ -56,7 +56,7 @@ def test_guardrail_rejection_triggers_repair(adapter):
 
 
 def test_exhausted_repairs_returns_error(adapter):
-    bad = _resp(action="sql", sql="SELECT Nme FROM Artist", confidence="low")
+    bad = _resp(action="sql", sql="SELECT nme FROM categories", confidence="low")
     _client, strategy = make(adapter, [bad, bad, bad])
     turn = strategy.run("q", [])
     assert turn.action == "error"

@@ -23,4 +23,4 @@ def test_handle_command_unknown_slash():
 
 
 def test_plain_question_not_a_command():
-    assert handle_command("how many artists?", None) is None
+    assert handle_command("how much did I spend?", None) is None

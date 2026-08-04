@@ -1,0 +1,72 @@
+[
+  {
+    "id": "q_001",
+    "tier": 1,
+    "question": "How much did I spend in July 2026 by category?",
+    "gold_sql": "SELECT c.name AS category, ROUND(SUM(t.amount), 2) AS total_spent FROM transactions t JOIN categories c ON t.category_id = c.category_id WHERE t.direction = 'expense' AND t.txn_date >= '2026-07-01' AND t.txn_date < '2026-08-01' GROUP BY c.name ORDER BY total_spent DESC",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_002",
+    "tier": 1,
+    "question": "Which subscriptions renew in the next 30 days after August 3, 2026?",
+    "gold_sql": "SELECT m.name, s.plan_name, s.amount, s.next_renewal_date FROM subscriptions s JOIN merchants m ON s.merchant_id = m.merchant_id WHERE s.status = 'active' AND s.next_renewal_date >= '2026-08-03' AND s.next_renewal_date < date('2026-08-03', '+30 days') ORDER BY s.next_renewal_date",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_003",
+    "tier": 1,
+    "question": "What is my total monthly cost for active subscriptions?",
+    "gold_sql": "SELECT ROUND(SUM(CASE WHEN billing_cycle = 'monthly' THEN amount WHEN billing_cycle = 'annual' THEN amount / 12.0 ELSE 0 END), 2) AS monthly_subscription_cost FROM subscriptions WHERE status = 'active'",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_004",
+    "tier": 2,
+    "question": "Which July 2026 categories were over budget?",
+    "gold_sql": "SELECT c.name AS category, b.amount_limit, ROUND(SUM(t.amount), 2) AS actual_spend, ROUND(SUM(t.amount) - b.amount_limit, 2) AS over_by FROM budgets b JOIN categories c ON b.category_id = c.category_id JOIN transactions t ON t.category_id = b.category_id AND t.direction = 'expense' AND t.txn_date >= b.month || '-01' AND t.txn_date < date(b.month || '-01', '+1 month') WHERE b.month = '2026-07' GROUP BY c.name, b.amount_limit HAVING actual_spend > b.amount_limit ORDER BY over_by DESC",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_005",
+    "tier": 1,
+    "question": "Who were my top merchants by spending in July 2026?",
+    "gold_sql": "SELECT m.name AS merchant, ROUND(SUM(t.amount), 2) AS total_spent FROM transactions t JOIN merchants m ON t.merchant_id = m.merchant_id WHERE t.direction = 'expense' AND t.txn_date >= '2026-07-01' AND t.txn_date < '2026-08-01' GROUP BY m.name ORDER BY total_spent DESC LIMIT 5",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_006",
+    "tier": 2,
+    "question": "Compare my July 2026 spending to June 2026 by parent category.",
+    "gold_sql": "SELECT c.parent_category, ROUND(SUM(CASE WHEN t.txn_date >= '2026-06-01' AND t.txn_date < '2026-07-01' THEN t.amount ELSE 0 END), 2) AS june_spend, ROUND(SUM(CASE WHEN t.txn_date >= '2026-07-01' AND t.txn_date < '2026-08-01' THEN t.amount ELSE 0 END), 2) AS july_spend, ROUND(SUM(CASE WHEN t.txn_date >= '2026-07-01' AND t.txn_date < '2026-08-01' THEN t.amount ELSE 0 END) - SUM(CASE WHEN t.txn_date >= '2026-06-01' AND t.txn_date < '2026-07-01' THEN t.amount ELSE 0 END), 2) AS change FROM transactions t JOIN categories c ON t.category_id = c.category_id WHERE t.direction = 'expense' AND t.txn_date >= '2026-06-01' AND t.txn_date < '2026-08-01' GROUP BY c.parent_category ORDER BY change DESC",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_007",
+    "tier": 2,
+    "question": "What percent of my July 2026 expense spending was essential?",
+    "gold_sql": "SELECT ROUND(100.0 * SUM(CASE WHEN c.is_essential = 1 THEN t.amount ELSE 0 END) / SUM(t.amount), 2) AS essential_spend_pct FROM transactions t JOIN categories c ON t.category_id = c.category_id WHERE t.direction = 'expense' AND t.txn_date >= '2026-07-01' AND t.txn_date < '2026-08-01'",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_008",
+    "tier": 1,
+    "question": "How much did I transfer to savings in July 2026?",
+    "gold_sql": "SELECT ROUND(SUM(amount), 2) AS savings_transfers FROM transactions WHERE direction = 'transfer' AND txn_date >= '2026-07-01' AND txn_date < '2026-08-01'",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_009",
+    "tier": 1,
+    "question": "Which savings goals still need more than $2,000?",
+    "gold_sql": "SELECT name, target_amount, current_amount, ROUND(target_amount - current_amount, 2) AS remaining FROM savings_goals WHERE target_amount - current_amount > 2000 ORDER BY remaining DESC",
+    "evaluation": "sql_result_match"
+  },
+  {
+    "id": "q_010",
+    "tier": 1,
+    "question": "What is my net cash flow for July 2026, excluding transfers?",
+    "gold_sql": "SELECT ROUND(SUM(CASE WHEN direction = 'income' THEN amount WHEN direction = 'expense' THEN -amount ELSE 0 END), 2) AS net_cash_flow FROM transactions WHERE txn_date >= '2026-07-01' AND txn_date < '2026-08-01' AND direction IN ('income', 'expense')",
+    "evaluation": "sql_result_match"
+  }
+]

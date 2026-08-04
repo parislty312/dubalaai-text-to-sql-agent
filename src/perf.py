@@ -45,8 +45,8 @@ def main() -> None:
     parser.add_argument("--model", default=DEFAULT_MODEL, choices=list(MODEL_REGISTRY))
     parser.add_argument("--strategy", default="single")
     parser.add_argument("--runs", type=int, default=3)
-    parser.add_argument("--db", default="data/Chinook.db")
-    parser.add_argument("--questions", default="data/dev_questions.json")
+    parser.add_argument("--db", default="data/personal_finance.db")
+    parser.add_argument("--questions", default="data/finance_questions.json")
     parser.add_argument(
         "--sleep",
         type=float,

@@ -1,0 +1,14 @@
+{
+  "q_001": {
+    "sql": "SELECT c.name AS category, ROUND(SUM(t.amount), 2) AS total_spent FROM transactions t JOIN categories c ON t.category_id = c.category_id WHERE t.direction = 'expense' AND t.txn_date >= '2026-07-01' AND t.txn_date < '2026-08-01' GROUP BY c.name ORDER BY total_spent DESC",
+    "answer": "Run the eval command to generate this answer."
+  },
+  "q_002": {
+    "sql": "SELECT m.name, s.plan_name, s.amount, s.next_renewal_date FROM subscriptions s JOIN merchants m ON s.merchant_id = m.merchant_id WHERE s.status = 'active' AND s.next_renewal_date >= '2026-08-03' AND s.next_renewal_date < date('2026-08-03', '+30 days') ORDER BY s.next_renewal_date",
+    "answer": "Run the eval command to generate this answer."
+  },
+  "q_003": {
+    "sql": "SELECT ROUND(SUM(CASE WHEN billing_cycle = 'monthly' THEN amount WHEN billing_cycle = 'annual' THEN amount / 12.0 ELSE 0 END), 2) AS monthly_subscription_cost FROM subscriptions WHERE status = 'active'",
+    "answer": "Run the eval command to generate this answer."
+  }
+}

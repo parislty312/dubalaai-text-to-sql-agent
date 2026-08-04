@@ -4,17 +4,13 @@ from src.context import build_schema_card
 def test_card_contains_all_tables(adapter):
     card = build_schema_card(adapter)
     for table in [
-        "Album",
-        "Artist",
-        "Customer",
-        "Employee",
-        "Genre",
-        "Invoice",
-        "InvoiceLine",
-        "MediaType",
-        "Playlist",
-        "PlaylistTrack",
-        "Track",
+        "accounts",
+        "budgets",
+        "categories",
+        "merchants",
+        "savings_goals",
+        "subscriptions",
+        "transactions",
     ]:
         assert "CREATE TABLE" in card
         assert table in card
@@ -22,24 +18,24 @@ def test_card_contains_all_tables(adapter):
 
 def test_card_has_fk_section(adapter):
     card = build_schema_card(adapter)
-    assert "Album.ArtistId -> Artist.ArtistId" in card
+    assert "transactions.category_id -> categories.category_id" in card
 
 
 def test_card_enumerates_low_cardinality_values(adapter):
     card = build_schema_card(adapter)
-    assert "Rock" in card
-    assert "Brazil" in card
+    assert "Groceries" in card
+    assert "expense" in card
 
 
 def test_card_skips_high_cardinality_columns(adapter):
-    card = build_schema_card(adapter)
-    assert card.count("Purple Haze") == 0 or "Track.Name:" not in card
+    card = build_schema_card(adapter, enum_cap=5)
+    assert card.count("June salary") == 0 or "transactions.description:" not in card
 
 
 def test_card_has_sample_rows(adapter):
     card = build_schema_card(adapter)
     assert "Sample rows" in card
-    assert "AC/DC" in card
+    assert "Everyday Checking" in card
 
 
 def test_card_is_reasonably_sized(adapter):

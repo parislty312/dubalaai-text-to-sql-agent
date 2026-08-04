@@ -4,12 +4,12 @@ from pathlib import Path
 import pandas as pd
 
 
-def load_db(db_path: str = "data/Chinook.db") -> sqlite3.Connection:
+def load_db(db_path: str = "data/personal_finance.db") -> sqlite3.Connection:
     """
     Load the SQLite database and return a connection.
 
     Args:
-        db_path: Path to the SQLite database file. Defaults to "data/Chinook.db"
+        db_path: Path to the SQLite database file. Defaults to "data/personal_finance.db"
 
     Returns:
         sqlite3.Connection: Active database connection

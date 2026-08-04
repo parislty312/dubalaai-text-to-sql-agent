@@ -11,14 +11,14 @@ def test_session_threads_history(adapter):
             json.dumps(
                 {
                     "action": "sql",
-                    "sql": "SELECT Name FROM Artist LIMIT 1",
+                    "sql": "SELECT name FROM categories LIMIT 1",
                     "confidence": "high",
                 }
             ),
             json.dumps(
                 {
                     "action": "sql",
-                    "sql": "SELECT Title FROM Album LIMIT 1",
+                    "sql": "SELECT name FROM accounts LIMIT 1",
                     "confidence": "high",
                 }
             ),
@@ -37,19 +37,19 @@ def test_session_threads_history(adapter):
 
 
 def test_naive_strategy_no_schema_no_repair(adapter):
-    client = FakeLLMClient(["```sql\nSELECT Name FROM Artist LIMIT 1\n```"])
+    client = FakeLLMClient(["```sql\nSELECT name FROM categories LIMIT 1\n```"])
     strategy = NaiveStrategy(client, adapter, "CARD_IGNORED")
-    turn = strategy.run("one artist", [])
+    turn = strategy.run("one category", [])
     assert turn.action == "sql"
     assert turn.result.row_count == 1
     sent = client.calls[0]["messages"]
     assert len(sent) == 1
     assert sent[0]["role"] == "user"
-    assert sent[0]["content"] == "Convert this question to SQL: one artist"
+    assert sent[0]["content"] == "Convert this question to SQL: one category"
 
 
 def test_naive_strategy_failure_is_error_not_repair(adapter):
-    client = FakeLLMClient(["SELECT Nme FROM Artist"])
+    client = FakeLLMClient(["SELECT nme FROM categories"])
     turn = NaiveStrategy(client, adapter, "X").run("q", [])
     assert turn.action == "error"
     assert turn.stats.llm_calls == 1

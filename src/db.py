@@ -33,7 +33,7 @@ _ALLOWED_ACTIONS = {
 class SQLiteAdapter:
     dialect = "sqlite"
 
-    def __init__(self, db_path: str = "data/Chinook.db"):
+    def __init__(self, db_path: str = "data/personal_finance.db"):
         p = Path(db_path)
         if not p.exists():
             raise FileNotFoundError(f"{db_path} not found. Run ./setup.sh first.")

@@ -17,15 +17,15 @@ def _sql(sql, confidence="medium"):
 def test_majority_vote_wins(adapter):
     client = FakeLLMClient(
         [
-            _sql("SELECT COUNT(*) FROM Artist"),
+            _sql("SELECT COUNT(*) FROM transactions"),
             _sql("SELECT 1"),
-            _sql("SELECT COUNT(*) AS c FROM Artist"),
+            _sql("SELECT COUNT(*) AS c FROM transactions"),
         ]
     )
     strategy = SelfConsistencyStrategy(client, adapter, "CARD", n=3)
-    turn = strategy.run("how many artists", [])
+    turn = strategy.run("how many transactions", [])
     assert turn.action == "sql"
-    assert turn.result.rows[0][0] == 275
+    assert turn.result.rows[0][0] == 40
     assert turn.stats.llm_calls == 3
     assert client.calls[0]["temperature"] > 0
 
@@ -33,18 +33,18 @@ def test_majority_vote_wins(adapter):
 def test_failed_candidates_are_excluded(adapter):
     client = FakeLLMClient(
         [
-            _sql("SELECT Nme FROM Artist"),
-            _sql("SELECT COUNT(*) FROM Artist"),
-            _sql("SELECT Nme FROM Artist"),
+            _sql("SELECT nme FROM categories"),
+            _sql("SELECT COUNT(*) FROM transactions"),
+            _sql("SELECT nme FROM categories"),
         ]
     )
     turn = SelfConsistencyStrategy(client, adapter, "CARD", n=3).run("q", [])
     assert turn.action == "sql"
-    assert turn.result.rows[0][0] == 275
+    assert turn.result.rows[0][0] == 40
 
 
 def test_all_failed_is_error(adapter):
-    bad = _sql("SELECT Nme FROM Artist")
+    bad = _sql("SELECT nme FROM categories")
     turn = SelfConsistencyStrategy(
         FakeLLMClient([bad, bad, bad]),
         adapter,
