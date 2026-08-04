@@ -16,9 +16,8 @@ cp .env.example .env
 Add your provider settings:
 
 ```bash
-DUBALAAI_API_KEY=...
-DUBALAAI_BASE_URL=https://api.dubalaai.ai/v1
-OPENAI_API_KEY=...
+FIREWORKS_API_KEY=...
+FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1
 ```
 
 If `data/Chinook.db` is missing, run:
@@ -43,14 +42,14 @@ python -m pytest -q
 ## 3. Run The CLI
 
 ```bash
-uv run python -m src.cli --model qwen3.6-plus --strategy single --no-summary
+uv run python -m src.cli --model qwen3-235b-a22b --strategy single --no-summary
 ```
 
 Or, after activating `.venv`:
 
 ```bash
 source .venv/bin/activate
-python -m src.cli --model qwen3.6-plus --strategy single --no-summary
+python -m src.cli --model qwen3-235b-a22b --strategy single --no-summary
 ```
 
 Then ask a question:
@@ -64,7 +63,7 @@ Useful CLI commands:
 ```text
 /help
 /schema
-/model gpt-oss-20b
+/model qwen3-30b-a3b
 /strategy react
 exit
 ```
@@ -78,7 +77,7 @@ Run only two questions first:
 
 ```bash
 uv run python -m src.evals \
-  --model qwen3.6-plus \
+  --model qwen3-235b-a22b \
   --strategy single \
   --questions data/dev_questions_with_answers.json \
   --limit 2 \
@@ -96,11 +95,11 @@ cat results/eval_smoke.md
 
 ```bash
 uv run python -m src.evals \
-  --model qwen3.6-plus \
+  --model qwen3-235b-a22b \
   --strategy single \
   --questions data/dev_questions_with_answers.json \
-  --out results/eval_qwen3.6-plus_single.json \
-  --markdown results/eval_qwen3.6-plus_single.md \
+  --out results/eval_qwen3-235b-a22b_single.json \
+  --markdown results/eval_qwen3-235b-a22b_single.md \
   --write-answers dev_answers.json
 ```
 
@@ -115,7 +114,7 @@ deterministic row preview, add:
 
 ```bash
 mkdir -p results
-for model in gpt-oss-120b gpt-oss-20b; do
+for model in qwen3-235b-a22b qwen3-30b-a3b qwen3-8b; do
   for strategy in naive single react sc; do
     uv run python -m src.evals \
       --model "$model" \
@@ -127,13 +126,5 @@ for model in gpt-oss-120b gpt-oss-20b; do
 done
 ```
 
-To include the OpenAI baseline:
-
-```bash
-uv run python -m src.evals \
-  --model gpt-5.4 \
-  --strategy naive \
-  --questions data/dev_questions_with_answers.json \
-  --out results/eval_gpt-5.4_naive.json \
-  --markdown results/eval_gpt-5.4_naive.md
-```
+An optional OpenAI-compatible baseline can be added in `src/config.py` if you
+want to compare against another provider.

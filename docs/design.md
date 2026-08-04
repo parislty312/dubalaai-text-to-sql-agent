@@ -25,7 +25,7 @@ User question
 - `src/context.py`: schema-card generation from live SQLite metadata.
 - `src/db.py`: SQLite adapter with read-only query execution.
 - `src/guardrails.py`: SQL validation for allowed read-only statements.
-- `src/providers.py`: OpenAI SDK wrapper for DubalaAI and OpenAI-compatible
+- `src/providers.py`: OpenAI SDK wrapper for Fireworks and OpenAI-compatible
   chat completion APIs.
 - `src/evals.py`: execution-accuracy evaluation against question/answer sets.
 - `src/perf.py`: latency and cost benchmark helper.
@@ -60,12 +60,12 @@ report includes:
 
 ## Provider Configuration
 
-DubalaAI models are configured through:
+Fireworks models are configured through:
 
 ```bash
-DUBALAAI_API_KEY=...
-DUBALAAI_BASE_URL=https://api.dubalaai.ai/v1
+FIREWORKS_API_KEY=...
+FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1
 ```
 
-The code uses an OpenAI-compatible client so a DubalaAI gateway, proxy, or
-compatible model endpoint can be swapped without changing the agent logic.
+The code uses an OpenAI-compatible client, so the Fireworks backend can be
+swapped for another compatible model endpoint without changing the agent logic.

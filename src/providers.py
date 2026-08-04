@@ -39,7 +39,7 @@ def cost_usd(spec: ModelSpec, usage: Usage) -> float:
 
 
 class LLMClient:
-    """Small wrapper around the OpenAI SDK for DubalaAI and OpenAI models."""
+    """Small wrapper around the OpenAI SDK for OpenAI-compatible providers."""
 
     def __init__(self, spec: ModelSpec):
         self.spec = spec

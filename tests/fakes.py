@@ -5,7 +5,7 @@ from src.providers import LLMResponse, Usage
 
 FAKE_SPEC = SimpleNamespace(
     model_id="fake",
-    provider="dubalaai",
+    provider="fireworks",
     input_price=0.15,
     output_price=0.60,
 )
