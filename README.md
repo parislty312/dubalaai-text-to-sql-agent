@@ -62,7 +62,7 @@ FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1
 Run the CLI:
 
 ```bash
-uv run python -m src.cli --model qwen3-235b-a22b --strategy single --no-summary
+uv run python -m src.cli --model qwen3p7-plus --strategy single --no-summary
 ```
 
 Try:
@@ -87,18 +87,18 @@ Run the text-to-SQL eval set:
 
 ```bash
 uv run python -m src.evals \
-  --model qwen3-235b-a22b \
+  --model qwen3p7-plus \
   --strategy single \
   --questions data/dev_questions_with_answers.json \
-  --out results/eval_qwen3-235b-a22b_single.json \
-  --markdown results/eval_qwen3-235b-a22b_single.md \
+  --out results/eval_qwen3p7-plus_single.json \
+  --markdown results/eval_qwen3p7-plus_single.md \
   --write-answers dev_answers.json
 ```
 
 Benchmark latency and cost:
 
 ```bash
-uv run python -m src.perf --model qwen3-235b-a22b --strategy single
+uv run python -m src.perf --model qwen3p7-plus --strategy single
 ```
 
 ## Configuration

@@ -42,14 +42,14 @@ python -m pytest -q
 ## 3. Run The CLI
 
 ```bash
-uv run python -m src.cli --model qwen3-235b-a22b --strategy single --no-summary
+uv run python -m src.cli --model qwen3p7-plus --strategy single --no-summary
 ```
 
 Or, after activating `.venv`:
 
 ```bash
 source .venv/bin/activate
-python -m src.cli --model qwen3-235b-a22b --strategy single --no-summary
+python -m src.cli --model qwen3p7-plus --strategy single --no-summary
 ```
 
 Then ask a question:
@@ -63,7 +63,7 @@ Useful CLI commands:
 ```text
 /help
 /schema
-/model qwen3-30b-a3b
+/model qwen3.7-plus
 /strategy react
 exit
 ```
@@ -77,7 +77,7 @@ Run only two questions first:
 
 ```bash
 uv run python -m src.evals \
-  --model qwen3-235b-a22b \
+  --model qwen3p7-plus \
   --strategy single \
   --questions data/dev_questions_with_answers.json \
   --limit 2 \
@@ -95,11 +95,11 @@ cat results/eval_smoke.md
 
 ```bash
 uv run python -m src.evals \
-  --model qwen3-235b-a22b \
+  --model qwen3p7-plus \
   --strategy single \
   --questions data/dev_questions_with_answers.json \
-  --out results/eval_qwen3-235b-a22b_single.json \
-  --markdown results/eval_qwen3-235b-a22b_single.md \
+  --out results/eval_qwen3p7-plus_single.json \
+  --markdown results/eval_qwen3p7-plus_single.md \
   --write-answers dev_answers.json
 ```
 
@@ -114,7 +114,7 @@ deterministic row preview, add:
 
 ```bash
 mkdir -p results
-for model in qwen3-235b-a22b qwen3-30b-a3b qwen3-8b; do
+for model in qwen3p7-plus qwen3.7-plus deepseek-v4-flash; do
   for strategy in naive single react sc; do
     uv run python -m src.evals \
       --model "$model" \

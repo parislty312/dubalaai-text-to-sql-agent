@@ -17,6 +17,6 @@ def test_response_format_fireworks():
 
 
 def test_cost_usd():
-    spec = get_model("qwen3-235b-a22b")
+    spec = get_model("qwen3p7-plus")
     usage = Usage(input_tokens=1_000_000, output_tokens=100_000)
-    assert abs(cost_usd(spec, usage) - (0.22 + 0.088)) < 1e-9
+    assert abs(cost_usd(spec, usage) - (0.50 + 0.30)) < 1e-9

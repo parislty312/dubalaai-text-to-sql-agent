@@ -30,23 +30,25 @@ def _fireworks(model_id: str, api_model: str, inp: float, out: float, **extra) -
 
 
 MODEL_REGISTRY: dict[str, ModelSpec] = {
-    "qwen3-235b-a22b": _fireworks(
-        "qwen3-235b-a22b",
-        "accounts/fireworks/models/qwen3-235b-a22b",
-        0.22,
-        0.88,
+    "qwen3p7-plus": _fireworks(
+        "qwen3p7-plus",
+        "accounts/fireworks/models/qwen3p7-plus",
+        0.50,
+        3.00,
+        reasoning_effort="none",
     ),
-    "qwen3-30b-a3b": _fireworks(
-        "qwen3-30b-a3b",
-        "accounts/fireworks/models/qwen3-30b-a3b",
-        0.15,
-        0.60,
+    "qwen3.7-plus": _fireworks(
+        "qwen3.7-plus",
+        "accounts/fireworks/models/qwen3p7-plus",
+        0.50,
+        3.00,
+        reasoning_effort="none",
     ),
-    "qwen3-8b": _fireworks(
-        "qwen3-8b",
-        "accounts/fireworks/models/qwen3-8b",
-        0.05,
-        0.20,
+    "deepseek-v4-flash": _fireworks(
+        "deepseek-v4-flash",
+        "accounts/fireworks/models/deepseek-v4-flash",
+        0.14,
+        0.28,
     ),
     "gpt-oss-120b": _fireworks(
         "gpt-oss-120b",
@@ -62,7 +64,7 @@ MODEL_REGISTRY: dict[str, ModelSpec] = {
     ),
 }
 
-DEFAULT_MODEL = "qwen3-235b-a22b"
+DEFAULT_MODEL = "qwen3p7-plus"
 
 
 def get_model(model_id: str) -> ModelSpec:
