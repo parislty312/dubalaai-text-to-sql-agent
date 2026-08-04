@@ -1,0 +1,4 @@
+name,account_type,institution,currency,active
+Everyday Checking,checking,Mock National Bank,USD,1
+Travel Credit Card,credit_card,Mock Rewards Bank,USD,1
+High Yield Savings,savings,Mock Online Bank,USD,1

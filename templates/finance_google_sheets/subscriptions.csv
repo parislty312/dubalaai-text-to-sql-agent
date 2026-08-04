@@ -1,0 +1,4 @@
+subscription_id,merchant,category,account,plan_name,amount,billing_cycle,next_renewal_date,status,started_on
+,Netflix,Streaming,Travel Credit Card,Standard,15.49,monthly,2026-09-15,active,2024-01-15
+,Spotify,Streaming,Travel Credit Card,Individual,10.99,monthly,2026-09-17,active,2023-10-17
+,Notion,Software,Travel Credit Card,Plus,12.00,monthly,2026-09-19,active,2025-02-19

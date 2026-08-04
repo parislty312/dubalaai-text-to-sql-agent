@@ -1,0 +1,9 @@
+name,merchant_type,default_category
+Trader Joes,grocery,Groceries
+Sweetgreen,restaurant,Dining
+Blue Bottle Coffee,cafe,Coffee
+Netflix,subscription,Streaming
+Spotify,subscription,Streaming
+Notion,subscription,Software
+GitHub,subscription,Software
+OpenAI API,cloud,Cloud

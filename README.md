@@ -30,7 +30,13 @@ multiple prompting strategies, and an evaluation harness.
 │   └── finance_questions_with_answers.json
 ├── docs/
 │   ├── case_study.md
-│   └── design.md
+│   ├── design.md
+│   └── mobile_finance_workflow.md
+├── scripts/
+│   ├── create_personal_finance_db.py
+│   └── sync_finance_data.py
+├── templates/
+│   └── finance_google_sheets/
 ├── results/
 ├── src/
 │   ├── agent.py
@@ -102,6 +108,19 @@ Benchmark latency and cost:
 ```bash
 uv run python -m src.perf --model qwen3p7-plus --strategy single
 ```
+
+## Mobile Data Entry
+
+Use Google Sheets from your phone as the editing layer. CSV templates live in
+`templates/finance_google_sheets/`; exported monthly CSVs go into
+`data/imports/` and are ignored by git.
+
+```bash
+uv run python scripts/sync_finance_data.py --import-dir data/imports
+```
+
+See [docs/mobile_finance_workflow.md](docs/mobile_finance_workflow.md) for the
+full workflow.
 
 ## Configuration
 

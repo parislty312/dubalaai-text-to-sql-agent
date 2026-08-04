@@ -1,0 +1,17 @@
+name,parent_category,kind,is_essential
+Salary,Income,income,1
+Rent,Housing,expense,1
+Groceries,Food,expense,1
+Dining,Food,expense,0
+Coffee,Food,expense,0
+Transportation,Mobility,expense,1
+Utilities,Home,expense,1
+Phone,Home,expense,1
+Streaming,Subscriptions,expense,0
+Software,Subscriptions,expense,0
+Cloud,Subscriptions,expense,0
+Fitness,Health,expense,0
+Shopping,Lifestyle,expense,0
+Travel,Lifestyle,expense,0
+Healthcare,Health,expense,1
+Savings Transfer,Savings,transfer,1

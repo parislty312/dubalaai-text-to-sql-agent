@@ -4,3 +4,8 @@ __pycache__/
 .env
 *.egg-info/
 .pytest_cache/
+data/imports/*.csv
+data/imports/*.tsv
+data/imports/*.xlsx
+!data/imports/.gitkeep
+finance_answers.json

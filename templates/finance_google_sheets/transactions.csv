@@ -1,0 +1,4 @@
+transaction_id,txn_date,account,merchant,category,amount,direction,description,payment_method,recurring
+,2026-08-06,Travel Credit Card,Trader Joes,Groceries,74.32,expense,Weekly groceries,credit,0
+,2026-08-07,Travel Credit Card,Sweetgreen,Dining,18.45,expense,Lunch,credit,0
+,2026-08-08,Everyday Checking,Mock Online Bank,Savings Transfer,1000.00,transfer,Monthly savings transfer,ach,1

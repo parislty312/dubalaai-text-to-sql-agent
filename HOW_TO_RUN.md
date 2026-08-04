@@ -129,3 +129,15 @@ done
 
 An optional OpenAI-compatible baseline can be added in `src/config.py` if you
 want to compare against another provider.
+
+## 7. Sync Phone-Friendly Finance Data
+
+Use Google Sheets on your phone for editing, then export changed tabs as CSV
+files into `data/imports/`.
+
+```bash
+uv run python scripts/sync_finance_data.py --import-dir data/imports
+```
+
+CSV templates are in `templates/finance_google_sheets/`. Real files in
+`data/imports/` are ignored by git.
